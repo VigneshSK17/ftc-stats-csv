@@ -15,3 +15,9 @@ OPTIONS:
     --file-name <string>  determine what the name of the generated csv file will be
     --help                display this list of options.
 ```
+
+# How to build locally
+
+1) Note: Install the [dotnet-sdk](https://dotnet.microsoft.com/en-us/download) on your device.
+2) Run ```dotnet build``` to create the executable
+- The newly-created executable will be located at ```./bin/Debug/net7.0/``` and will be called ftc_stats_csv with the appropriate extension

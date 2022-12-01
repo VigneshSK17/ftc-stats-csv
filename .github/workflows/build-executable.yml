@@ -1,0 +1,55 @@
+on: [push]
+
+jobs:
+  build:
+    name: Build project
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest]
+
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '7.0.x'
+
+    - name: Gets latest created release info
+      id: latest_release_info
+      uses: jossef/action-latest-release-info@v1.2.1
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+
+    - name: Build project
+      run: |
+        dotnet build
+        echo Mac
+        ./bin/Debug/net7.0/ftc_stats_csv --help
+
+    - name: Upload binary
+      id: upload-binary
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.latest_release_info.outputs.upload_url }}
+        asset_path: ./bin/Debug/net7.0/ftc-stats-csv
+        asset_name: ftc_stats_csv-${{ runner.os }}
+        asset_content_type: application/x-elf
+
+  # build-windows:
+  #   name: Build windows executable
+  #   runs-on: windows-latest
+  #   steps:
+  #   - uses: actions/checkout@v3
+  #   - uses: actions/setup-dotnet@v3
+  #     with:
+  #       dotnet-version: '7.0.x'
+  #   - name: Do thing
+  #     run: |
+  #       dotnet build
+  #       ./bin/Debug/net7.0/ftc_stats_csv.exe --help
+  #       mv $GITHUB_WORKSPACE/bin/Debug/net7.0/ftc_stats_csv $GITHUB_WORKSPACE 
+  #   - uses: stefanzweifel/git-auto-commit-action@v4
+  #     with:
+  #       commit_message: Test pushing windows exe

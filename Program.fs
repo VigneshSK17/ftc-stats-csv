@@ -46,6 +46,7 @@ type Arguments =
     | Region of Region
     | Date of string
     // | Teams of int list
+    | No_Header
     | File_Name of string
     interface IArgParserTemplate with
 
@@ -54,6 +55,7 @@ type Arguments =
             | Season _ -> "specify current year of the season, the year when the season ends"
             | Region _ -> "specify what region of competition you want data from"
             | Date _ -> "specify competition date you want data from in the format MM/DD/YY"
+            | No_Header _ -> "removes title row in csv file to make it easier to combine generated data"
             | File_Name _ -> "determine what the name of the generated csv file will be"
 
 let errorHandler = ProcessExiter(colorizer = function ErrorCode.HelpText -> None | _ -> Some ConsoleColor.Red)
@@ -64,7 +66,8 @@ let season = results.GetResult(Season, defaultValue=2023)
 let region = results.GetResult Region |> parse_region
 let date = results.GetResult(Date, defaultValue="")
 let file_name = results.GetResult(File_Name, defaultValue="ftc-stats")
+let no_header = results.Contains No_Header
 
-let file_path = FTCStatsCLI.StatsPage.GenCSV season region date file_name
+let file_path = FTCStatsCLI.StatsPage.GenCSV season region date no_header file_name
 
 // printfn "%s" file_path

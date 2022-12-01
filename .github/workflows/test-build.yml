@@ -2,7 +2,7 @@ on: [push]
 
 jobs:
   build:
-    name: Build project on macos, ubuntu, and windows
+    name: Build project
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:

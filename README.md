@@ -16,7 +16,7 @@ OPTIONS:
     --help                display this list of options.
 ```
 
-# How to build locally
+# How to build executable locally
 
 1) Note: Install the [dotnet-sdk](https://dotnet.microsoft.com/en-us/download) on your device.
 2) Run ```dotnet build``` to create the executable

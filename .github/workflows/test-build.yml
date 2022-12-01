@@ -1,0 +1,19 @@
+on: [push]
+
+jobs:
+  build:
+    name: Build project on macos, ubuntu, and windows
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
+
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '7.0.100'
+
+    - name: Build project
+      run: |
+        dotnet build

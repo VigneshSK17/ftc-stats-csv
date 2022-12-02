@@ -3,7 +3,6 @@ module FTCStatsCLI.StatsPage
 #r "nuget: FSharp.Data"
 
 open FSharp.Data
-open System.Collections.Generic
 open System.IO
 
 [<Literal>]
@@ -37,18 +36,43 @@ let private GenCSVStr (rows: STATS_HTML.Opr.Row[])  =
     ))
     (new RowStatsCSV(values)).SaveToString()
 
+let get_teams_list teams_str : string list = 
+    match teams_str with
+    | "" -> []
+    | s ->
+        s.Split(',')
+        |> Array.map(fun t -> 
+            try
+                let _ = (int) t
+                t
+            with
+            | :? System.FormatException ->
+                failwith "Team numbers are not valid.")
+        |> Array.toList 
 
-let GenCSV season_num region date no_header file_name =
+let GenCSV season_num region date teams_str no_header file_name =
     let header = "Team,Team Name,Event,OPR,Auto OPR,Auto Cones,Auto Nav,TeleOp OPR,TeleOp Cones,TeleOp Junctions,EndGame OPR,Junctions Owned,Circuits"
 
     let csv_str = GetLink season_num region |> GetRows |> GenCSVStr
     let csv_lines = 
         match date with
-        | "" -> csv_str.Split('\n')
+        | "" -> csv_str.Split('\n') |> Array.toList
         | _ ->
-            csv_str.Split('\n') |> Array.filter(fun l -> l.Contains date)
+            csv_str.Split('\n') |> Array.toList |> List.filter(fun l -> l.Contains date)
 
-    let csv_lines_header = if no_header then csv_lines |> Array.toList else header :: (csv_lines |> Array.toList)
+    let csv_lines_teams =
+        match teams_str with
+        | "" -> csv_lines
+        | ts ->
+            ts
+            |> get_teams_list
+            |> List.map(fun team ->
+                csv_lines 
+                |> List.filter(fun l -> l.Contains team)
+            )
+            |> List.map(fun rows -> rows |> String.concat "")
+
+    let csv_lines_header = if no_header then csv_lines_teams else header :: csv_lines_teams
 
     let file_path = $"{file_name}.csv"
     File.WriteAllLines(file_path, csv_lines_header)

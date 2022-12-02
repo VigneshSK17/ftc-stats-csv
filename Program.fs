@@ -55,7 +55,7 @@ type Arguments =
             | Season _ -> "specify current year of the season, the year when the season ends"
             | Region _ -> "specify what region of competition you want data from"
             | Date _ -> "specify competition date you want data from in the format MM/DD/YY"
-            | Teams _ -> "enter teams you want to be included in your data separated by commas (Ex: 9686,12864)"
+            | Teams _ -> "enter teams you want to be included in your data separated by commas (Ex: \"9686,12864\")"
             | No_Header _ -> "removes title row in csv file to make it easier to combine generated data"
             | File_Name _ -> "determine what the name of the generated csv file will be"
 

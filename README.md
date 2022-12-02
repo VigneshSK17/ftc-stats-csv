@@ -2,6 +2,7 @@
 A simple CLI tool to generate a usable CSV from data on ftcstats.org
 
 - Example CSV can be found in the examples/ folder
+    - Command: ```./bin/Debug/net7.0/ftc_stats_csv --region ga --date 11/12/22 --file-name ./examples/ga-11_12_22```
 
 # How to build executable locally
 
@@ -12,7 +13,9 @@ A simple CLI tool to generate a usable CSV from data on ftcstats.org
 # Help
 
 ```
-USAGE: ftc_stats_csv [--help] [--season <int>] [--region <ak|az|ca|cala|cano|casd|fl|ga|hi|ia|il|ky|mi|mn|moks|mt|nj|nv|ny|nyny|oh|ok|or|tx|txce|txho|txno|txso|txwp|wa>] [--date <string>] [--file-name <string>]
+USAGE: ftc_stats_csv [--help] [--season <int>]
+                     [--region <ak|az|ca|cala|cano|casd|fl|ga|hi|ia|il|ky|mi|mn|moks|mt|nj|nv|ny|nyny|oh|ok|or|tx|txce|txho|txno|txso|txwp|wa>]
+                     [--date <string>] [--teams <string>] [--no-header] [--file-name <string>]
 
 OPTIONS:
 
@@ -20,6 +23,8 @@ OPTIONS:
     --region <ak|az|ca|cala|cano|casd|fl|ga|hi|ia|il|ky|mi|mn|moks|mt|nj|nv|ny|nyny|oh|ok|or|tx|txce|txho|txno|txso|txwp|wa>
                           specify what region of competition you want data from
     --date <string>       specify competition date you want data from in the format MM/DD/YY
+    --teams <string>      enter teams you want to be included in your data separated by commas (Ex: "9686,12864")
+    --no-header           removes title row in csv file to make it easier to combine generated data
     --file-name <string>  determine what the name of the generated csv file will be
     --help                display this list of options.
 ```

@@ -2,6 +2,7 @@
 A simple CLI tool to generate a usable CSV from data on ftcstats.org
 
 - Example CSV can be found in the examples/ folder
+    Command: ```./bin/Debug/net7.0/ftc_stats_csv --region ga --date 11/12/22 --file-name ./examples/ga-11_12_22```
 
 # How to build executable locally
 

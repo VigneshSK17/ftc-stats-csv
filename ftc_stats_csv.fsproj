@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -11,8 +11,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Argu" Version="6.1.1" />
-    <PackageReference Include="FSharp.Data" Version="5.0.2" />
+    <PackageReference Include="Argu" Version="6.1.5" />
+    <PackageReference Include="FSharp.Data" Version="6.3.0" />
   </ItemGroup>
 
 </Project>
